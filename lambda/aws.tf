@@ -2,9 +2,9 @@
 terraform {
   backend "remote" {
     hostname = "app.terraform.io"
-    organization = "value"
+    organization = "example-org-49d094"
     workspaces {
-        name = "value"
+        name = "terraform-aws-lambda"
     }
   }
   required_providers {
@@ -13,5 +13,8 @@ terraform {
       version = "~> 3.0"
     }
   }
+}
+
+data aws_caller_identity this {
 }
 

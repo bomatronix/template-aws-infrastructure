@@ -1,6 +1,6 @@
 //aws iam role for lambda_service_role
 resource "aws_iam_role" "lambda_service_role" {
-  name = "${var.product}.lambda-service-role"
+  name = "${var.product}.lambda-service.role"
 
   lifecycle {
     ignore_changes = [assume_role_policy]
@@ -11,7 +11,7 @@ resource "aws_iam_role" "lambda_service_role" {
     policy = data.aws_iam_policy_document.lambda_service_role_policy.json
   }
 
-  assume_role_policy = jsondecode({
+  assume_role_policy = jsonencode({
     "Version" : "2012-10-17",
     "Statement" : [
       {
@@ -67,7 +67,7 @@ data "aws_iam_policy_document" "lambda_service_role_policy" {
         "events:Describe*",
         "events:List*"
     ]
-    resources = [ "arn:aws:events:*:${var.aws_account_id}:function:*" ]
+    resources = [ "arn:aws:events:*:${var.aws_account_id}:*" ]
   }
 
   statement {
@@ -76,6 +76,6 @@ data "aws_iam_policy_document" "lambda_service_role_policy" {
       "cloudwatch:ListMetricData",
       "cloudwatch:GetMetricData"
     ]
-    resources = [ "arn:aws:cloudwatch:*:${var.aws_account_id}:function:*" ]
+    resources = [ "arn:aws:cloudwatch:*:${var.aws_account_id}:*" ]
   }
 }

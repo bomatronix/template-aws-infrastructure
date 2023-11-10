@@ -7,7 +7,7 @@ resource "aws_lambda_permission" "api_gateway_lambda_permission" {
   action        = each.value["action"]
   function_name = var.function_name
   principal     = each.value["principal"]
-  source_arn    = "${data.aws_api_gateway_rest_api.rest_api[each.key["api_name"]].execution_arn}/*/${each.value["method"]}/${each.value["path"]}"
+  source_arn    = "${data.aws_api_gateway_rest_api.rest_api[each.key].execution_arn}/*/${each.value["method"]}/${each.value["path"]}"
 }
 
 // read aws api getway rest api from aws

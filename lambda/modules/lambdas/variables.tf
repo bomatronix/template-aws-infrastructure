@@ -88,11 +88,6 @@ variable "region" {
   default     = "us-east-1"
 }
 
-//variable for rest_api_id
-variable "rest_api_id" {
-  type        = string
-  description = "The ID of the API Gateway REST API"
-}
 
 //variable for aws_account_id
 variable "aws_account_id" {
