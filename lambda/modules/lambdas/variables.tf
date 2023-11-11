@@ -71,13 +71,13 @@ variable "security_group_ids" {
 
 //variable for lambda_permissions
 variable "lambda_permissions" {
-  type        = list(string)
+  type        = any
   description = "The list of Lambda permissions"
 }
 
 //varible for lambda_event_source_mappings
 variable "lambda_event_source_mappings" {
-  type        = list(string)
+  type        = any
   description = "The list of Lambda event source mappings"
 }
 
@@ -107,6 +107,7 @@ variable "product" {
   type        = string
   description = "The product name"
 }
+
 
 variable "timeout" {
   description = "The amount of time that AWS Lambda allows a function to run before stopping it."

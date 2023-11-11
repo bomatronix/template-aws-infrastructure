@@ -42,3 +42,8 @@ variable "aws_secret_key" {
   description = "The aws aws_secret_key"
 }
 
+//variable for lambda service role
+variable "role_name" {
+  type        = string
+  description = "The lambda service role"
+}
