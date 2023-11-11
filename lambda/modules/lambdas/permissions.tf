@@ -21,7 +21,7 @@ data "aws_api_gateway_rest_api" "rest_api" {
 resource "aws_lambda_permission" "event_bridge_lambda_permission" {
   depends_on = [aws_lambda_function.lambdas]
   for_each   = { for key, value in var.lambda_permissions : key => value if value["type"] == "event_bridge" }
-  statement_id_prefix = each.value["statement_id_prefix"]
+  statement_id_prefix = each.value["statement_id"]
   action        = each.value["action"]
   function_name = var.function_name
   principal     = each.value["principal"]
@@ -32,7 +32,7 @@ resource "aws_lambda_permission" "event_bridge_lambda_permission" {
 resource "aws_lambda_permission" "s3_lambda_permission" {
   depends_on = [aws_lambda_function.lambdas]
   for_each   = { for key, value in var.lambda_permissions : key => value if value["type"] == "s3" }
-  statement_id_prefix = each.value["statement_id_prefix"]
+  statement_id_prefix = each.value["statement_id"]
   action        = each.value["action"]
   function_name = var.function_name
   principal     = each.value["principal"]
@@ -45,6 +45,21 @@ data "aws_s3_bucket" "s3_bucket" {
   bucket   = "${each.value["bucket_name"]}-${var.environment}"
 }
 
+// add aws lambda permission for network interface for lambda
+# resource "aws_lambda_permission" "network_interface_lambda_permission" {
+#   depends_on = [aws_lambda_function.lambdas]
+#   for_each   = { for key, value in var.lambda_permissions : key => value if value["type"] == "network_interface" }
+#   statement_id_prefix = each.value["statement_id"]
+#   action        = each.value["action"]
+#   function_name = var.function_name
+#   principal     = each.value["principal"]
+#   source_arn    = each.value["source_arn"]
+# }
+
+resource "aws_iam_role_policy_attachment" "AWSLambdaVPCAccessExecutionRole" {
+    role       = data.aws_iam_role.service_role.name
+    policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
+}
 
 
 

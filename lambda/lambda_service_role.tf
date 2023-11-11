@@ -1,8 +1,8 @@
 //aws iam role for lambda_service_role
 resource "aws_iam_role" "lambda_service_role" {
-  name = "${var.product}.lambda-service.role"
+  name = "${var.product}-${var.company_name}.lambda-service.role"
 
-  lifecycle {
+  lifecycle { 
     ignore_changes = [assume_role_policy]
   }
 

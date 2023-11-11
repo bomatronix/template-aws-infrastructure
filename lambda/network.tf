@@ -6,18 +6,6 @@ data "aws_vpc" "std_vpc" {
     }
 }
 
-// data aws_subnet with filter
-data "aws_subnets" "private_app_subnets" {
-    filter {
-        name = "tag:Name"
-        values = [data.aws_vpc.std_vpc.id]
-    }
-    filter {
-      name = "tag:Name"
-      values = []
-    }
-}
-
 // data aws_security_group with filter
 data "aws_security_group" "lambda_sg" {
     filter {
@@ -25,3 +13,16 @@ data "aws_security_group" "lambda_sg" {
         values = ["managed-sg"]
     }
 }
+
+// data aws_subnet with filter
+data "aws_subnets" "private_app_subnets" {
+    filter {
+        name = "vpc-id"
+        values = [data.aws_vpc.std_vpc.id]
+    }
+    # filter {
+    #   name = "tag:Name"
+    #   values = []
+    # }
+}
+

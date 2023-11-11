@@ -4,6 +4,12 @@ variable "product" {
   description = "The product name"
 }
 
+//variable for company_name
+variable "company_name" {
+  type        = string
+  description = "The company name"
+}
+
 //variable for aws_account_id
 variable "aws_account_id" {
   type        = string
@@ -41,4 +47,3 @@ variable "aws_secret_key" {
   type        = string
   description = "The aws aws_secret_key"
 }
-
