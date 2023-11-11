@@ -1,9 +1,17 @@
 // data archive_file place_hodler
 data "archive_file" "place_hodler" {
-  type        = "zip"
-  output_path = "${path.module}/lambda_function_payload.zip"
-  source {
-    content = "def lambda_handler(event, context):\n    print('Hello World')\n    return 'Hello World'\n"
-    filename = "lambda_function_payload.js"
-  }
+    type        = "zip"
+    source {
+        content  = <<EOF
+        exports.handler = async (event) => {
+            const response = {
+                statusCode: 200,
+                body: JSON.stringify('Hello from Lambda!'),
+            };
+            return response;
+        };
+        EOF
+        filename = "index.js"
+    }
+    output_path = "${path.module}/lambda_function_payload.zip"
 }

@@ -109,6 +109,13 @@ variable "product" {
 }
 
 
+//variable for company_name
+variable "company_name" {
+  type        = string
+  description = "The company name"
+}
+
+
 variable "timeout" {
   description = "The amount of time that AWS Lambda allows a function to run before stopping it."
   type        = number
@@ -122,5 +129,5 @@ variable "publish" {
 
 variable "reserved_concurrent_executions" {
   type    = number
-  default = 0
+  default = 1
 }

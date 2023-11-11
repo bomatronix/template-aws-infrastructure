@@ -2,10 +2,11 @@ locals {
   product_tags = jsondecode(var.product_tags)
   generic_lambda_config = jsondecode(templatefile("${path.module}/configurations/generic/lambda_config.json", {
     product = var.product,
-    company_name = "test_company"
+    company_name = var.company_name
   }))
   generic_lambda_layer_config = jsondecode(templatefile("${path.module}/configurations/generic/lambda_layer_config.json", {
     product = var.product
+    company_name = var.company_name
   })).value
 
   lambda_config = local.generic_lambda_config

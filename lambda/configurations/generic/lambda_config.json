@@ -1,15 +1,17 @@
+
 {
     "test_lambda": {
         "description": "Test lambda function",
         "env_vars": {
             "TEST_ENV_VAR": "test"
         },
-        "handler": "test_lambda.lambda_handler",
+        "handler": "index.handler",
         "lambda_event_source_mappings": {},
-        "lambda_permissions": {},
+        "lambda_permissions": {
+        },
         "layers": [],
         "mode": "Active",
-        "role_name": "${product}-${company_name}.api-lambda-service.role",
+        "role_name": "${product}-${company_name}.lambda-service.role",
         "runtime": "nodejs14.x",
         "timeout": 120
     }
