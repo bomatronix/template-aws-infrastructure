@@ -27,3 +27,6 @@ data "aws_lambda_layer_version" "layers" {
   for_each   = toset(var.layers)
   layer_name = "${each.key}_${var.environment}"
 }
+
+
+// add aws lambda permission for network interface for lambda

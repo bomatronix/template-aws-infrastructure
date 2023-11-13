@@ -1,5 +1,5 @@
 module "lambdas" {
-  source                       = "./modules/lambdas"
+  source                       = "./../modules/lambdas"
   for_each                     = local.lambda_config
   function_name                = "${each.key}-${var.environment}"
   environment                  = var.environment
@@ -29,7 +29,7 @@ module "lambdas" {
 // module lambda layers source "./mdoules/lambda_layers"
 module "lambda_layers" {
   for_each            = local.lambda_layer_config
-  source              = "./modules/lambda_layers"
+  source              = "./../modules/lambda_layers"
   layer_name          = "${each.key}_${var.environment}"
   filename            = data.archive_file.place_hodler.output_path
   compatible_runtimes = each.value["compatible_runtimes"]
