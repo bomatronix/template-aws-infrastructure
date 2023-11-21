@@ -5,7 +5,7 @@ variable "name" {
 }
 
 
-variable "openapi_spec" {
+variable "open_api_json_string" {
   type        = string
   description = "The OpenAPI specification of the API Gateway"
 }
@@ -20,7 +20,7 @@ variable "acm_certificate_arn" {
   description = "The ARN of the ACM certificate"
 }
 
-variable "enviornment" {
+variable "environment" {
   type        = string
   description = "The environment to deploy to"
 }
@@ -33,19 +33,19 @@ variable "product" {
 variable "logging_level" {
   type        = string
   description = "The logging level of the Lambda function"
-  
+
 }
 
 variable "usage_plan_limit" {
   type        = number
   description = "The usage plan limit"
-  
+
 }
 
 variable "usage_plan_period" {
   type        = string
   description = "The usage plan period"
-  
+
 }
 
 variable "usage_plan_offset" {
@@ -67,3 +67,42 @@ variable "api_gw_log_retention_in_days" {
   type        = number
   description = "The API Gateway log retention in days"
 }
+
+variable "api_lambda_config" {
+  type        = any
+  description = "The API Lambda configuration"
+}
+
+variable "api_lambda_layer_config" {
+  type        = any
+  description = "The API Lambda layer configuration"
+}
+
+variable "aws_account_id" {
+  type        = string
+  description = "The AWS account ID"
+
+}
+
+variable "company_name" {
+  type        = string
+  description = "The company name"
+}
+
+
+variable "compression_size" {
+  type        = number
+  description = "The compression size"
+}
+
+variable "base_path" {
+  type        = string
+  description = "The base path"
+}
+
+variable "aws_region" {
+  type        = string
+  description = "aws region"
+}
+
+

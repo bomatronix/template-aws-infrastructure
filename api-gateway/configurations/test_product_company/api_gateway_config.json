@@ -1,0 +1,7 @@
+{
+    "test-product-company": {
+        "company_name": "test-company",
+        "logging_level": "INFO",
+        "compression_size": 0
+    }
+}

@@ -3,7 +3,7 @@ resource "aws_api_gateway_rest_api" "api" {
   name        = var.name
   description = "Proxy to handle all the requests"
 
-  body = var.openapi_spec
+  body = var.open_api_json_string
   #   put_rest_api_mode = "merge" #TODO: uncomment this l   ine when terraform 0.13 is released
 
   endpoint_configuration {
@@ -15,7 +15,7 @@ resource "aws_api_gateway_rest_api" "api" {
 }
 
 resource "aws_api_gateway_domain_name" "api_gateway_domain_name" {
-  domain_name = "${var.name}-${var.enviornment}-certificate"
+  domain_name = "${var.name}-${var.environment}-certificate"
   #   regioregional_certificate_arn = var.acm_certificate_arn
 
   endpoint_configuration {
@@ -27,11 +27,11 @@ resource "aws_api_gateway_domain_name" "api_gateway_domain_name" {
 resource "aws_api_gateway_base_path_mapping" "api_gateway_base_path_mapping" {
   domain_name = aws_api_gateway_domain_name.api_gateway_domain_name.domain_name
   api_id      = aws_api_gateway_rest_api.api.id
-  stage_name  = var.enviornment
+  stage_name  = var.environment
 }
 
 resource "aws_api_gateway_request_validator" "api_gateway_request_validator" {
-  name                        = "${var.name}-${var.enviornment}-request-validator"
+  name                        = "${var.name}-${var.environment}-request-validator"
   rest_api_id                 = aws_api_gateway_rest_api.api.id
   validate_request_body       = true
   validate_request_parameters = true
@@ -39,7 +39,7 @@ resource "aws_api_gateway_request_validator" "api_gateway_request_validator" {
 
 resource "aws_api_gateway_deployment" "api_gateway_deployment" {
   rest_api_id       = aws_api_gateway_rest_api.api.id
-  stage_name        = var.enviornment
+  stage_name        = var.environment
   stage_description = "Deployment at ${timestamp()}"
 
   depends_on = [
@@ -54,7 +54,7 @@ resource "aws_api_gateway_deployment" "api_gateway_deployment" {
 
 resource "aws_api_gateway_stage" "api_gateway_stage" {
   rest_api_id   = aws_api_gateway_rest_api.api.id
-  stage_name    = var.enviornment
+  stage_name    = var.environment
   deployment_id = aws_api_gateway_deployment.api_gateway_deployment.id
   description   = "Deployment at ${timestamp()}"
   tags          = merge(var.standard_tags, ({ "name" = "${var.name}-stage" }))
@@ -84,7 +84,7 @@ resource "aws_api_gateway_stage" "api_gateway_stage" {
 
 //api gateway key resource
 resource "aws_api_gateway_api_key" "api_gateway_api_key" {
-  name = "${var.name}-${var.enviornment}-api-key"
+  name = "${var.name}-${var.environment}-api-key"
   description = "API key for ${var.name} API Gateway"
   enabled = true
 
@@ -96,7 +96,7 @@ resource "aws_api_gateway_api_key" "api_gateway_api_key" {
 }
 
 resource "aws_api_gateway_usage_plan" "api_gateway_usage_plan" {
-  name        = "${var.name}-${var.enviornment}-usage-plan"
+  name        = "${var.name}-${var.environment}-usage-plan"
   description = "Usage plan for ${var.name} API Gateway"
   api_stages {
     api_id = aws_api_gateway_rest_api.api.id

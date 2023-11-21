@@ -1,0 +1,60 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "API",
+        "description": "API",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000",
+            "description": "Local server"
+        }
+    ],
+    "tags": [
+        {
+            "name": "User",
+            "description": "User"
+        }
+    ],
+    "paths": {
+        "test/example": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Example",
+                "description": "Example",
+                "operationId": "example",
+                "responses": {
+                    "200": {
+                        "description": "Example",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Example"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "componenets": {
+        "schemas": {
+            "Example": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}

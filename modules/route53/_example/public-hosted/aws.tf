@@ -4,7 +4,7 @@ terraform {
     hostname = "app.terraform.io"
     organization = "example-org-49d094"
     workspaces {
-        name = "terraform-aws-api-gateway"
+        name = "rout53_example_public-hosted"
     }
   }
   required_providers {
@@ -17,4 +17,3 @@ terraform {
 
 data aws_caller_identity this {
 }
-

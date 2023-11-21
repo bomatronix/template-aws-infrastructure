@@ -4,7 +4,7 @@ terraform {
     hostname = "app.terraform.io"
     organization = "example-org-49d094"
     workspaces {
-        name = "terraform-aws-lambda"
+        name = "aws-lambda-sbx"
     }
   }
   required_providers {
