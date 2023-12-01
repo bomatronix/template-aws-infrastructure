@@ -1,0 +1,18 @@
+{
+    "test-product-company": {
+        "company_name": "test-company",
+        "logging_level": "INFO",
+        "compression_size": 0,
+        "usage_plan_burst_limit": 100,
+        "api_gw_log_retention_in_days": 30,
+        "usage_plan_limit": 1000,
+        "usage_plan_offset": 0,
+        "usage_plan_period": "MONTH",
+        "usage_plan_rate_limit": 100,
+        "standard_tags": {
+            "product": "test-product",
+            "environment": "test"
+        },
+        "acm_certificate_arn":"arn:aws:acm:us-east-1:889851937279:certificate/e6baf363-97d2-4ddd-9172-07f7a677344d"
+    }
+}

@@ -10,13 +10,14 @@ resource "aws_api_gateway_rest_api" "api" {
     types = ["REGIONAL"]
   }
 
-  tags = merge(var.standard_tags, tomap("name", var.name))
+  tags = merge(var.standard_tags, tomap({ "name" : var.name }))
 
 }
 
 resource "aws_api_gateway_domain_name" "api_gateway_domain_name" {
-  domain_name = "${var.name}-${var.environment}-certificate"
-  #   regioregional_certificate_arn = var.acm_certificate_arn
+  # domain_name = "${var.name}-${var.environment}-certificate"
+  domain_name               = "terraform-aws-modules-example.com"
+  regional_certificate_arn = var.acm_certificate_arn
 
   endpoint_configuration {
     types = ["REGIONAL"]
@@ -61,7 +62,7 @@ resource "aws_api_gateway_stage" "api_gateway_stage" {
 
   access_log_settings {
     destination_arn = aws_cloudwatch_log_group.api_gateway_log_group.arn
-    format = jsondecode({
+    format = jsonencode({
       "authorizer"        = "$context.authorizer.error",
       "api_gw_error"      = "$context.error.message",
       "lamda_status"      = "$context.integration_status",
@@ -84,9 +85,9 @@ resource "aws_api_gateway_stage" "api_gateway_stage" {
 
 //api gateway key resource
 resource "aws_api_gateway_api_key" "api_gateway_api_key" {
-  name = "${var.name}-${var.environment}-api-key"
+  name        = "${var.name}-${var.environment}-api-key"
   description = "API key for ${var.name} API Gateway"
-  enabled = true
+  enabled     = true
 
   depends_on = [
     aws_api_gateway_stage.api_gateway_stage,
@@ -106,22 +107,22 @@ resource "aws_api_gateway_usage_plan" "api_gateway_usage_plan" {
   tags         = merge(var.standard_tags, ({ "name" = "${var.name}-usage-plan" }))
 
   quota_settings {
-    limit = var.usage_plan_limit
+    limit  = var.usage_plan_limit
     period = var.usage_plan_period
     offset = var.usage_plan_offset
   }
 
   throttle_settings {
     burst_limit = var.usage_plan_burst_limit
-    rate_limit = var.usage_plan_rate_limit
+    rate_limit  = var.usage_plan_rate_limit
   }
 }
 
 
 resource "aws_api_gateway_usage_plan_key" "api_gateway_usage_plan_key" {
-    key_id = aws_api_gateway_api_key.api_gateway_api_key.id
-    key_type = "API_KEY"
-    usage_plan_id = aws_api_gateway_usage_plan.api_gateway_usage_plan.id
+  key_id        = aws_api_gateway_api_key.api_gateway_api_key.id
+  key_type      = "API_KEY"
+  usage_plan_id = aws_api_gateway_usage_plan.api_gateway_usage_plan.id
 }
 
 resource "aws_api_gateway_method_settings" "api_gateway_method_settings" {

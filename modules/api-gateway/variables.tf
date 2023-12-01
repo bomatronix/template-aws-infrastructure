@@ -95,10 +95,10 @@ variable "compression_size" {
   description = "The compression size"
 }
 
-variable "base_path" {
-  type        = string
-  description = "The base path"
-}
+# variable "base_path" {
+#   type        = string
+#   description = "The base path"
+# }
 
 variable "aws_region" {
   type        = string
