@@ -13,6 +13,6 @@
             "product": "test-product",
             "environment": "test"
         },
-        "acm_certificate_arn":"arn:aws:acm:us-east-1:889851937279:certificate/e6baf363-97d2-4ddd-9172-07f7a677344d"
+        "acm_certificate_arn": "arn:aws:acm:us-east-1:889851937279:certificate/b2adbad4-42bf-443d-b4cc-d1ecef9c11d3"
     }
 }
