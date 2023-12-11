@@ -30,16 +30,16 @@ module "records" {
   #   vpc_id = var.vpc_id
 
   records = [
-    {
-      name           = "test"
-      type           = "CNAME"
-      ttl            = 5
-      records        = ["admin.testexample.com"]
-      set_identifier = "test-primary"
-      weighted_routing_policy = {
-        weight = 90
-      }
-    }
+    # {
+    #   name           = "test"
+    #   type           = "CNAME"
+    #   ttl            = 5
+    #   records        = ["admin.testexample.com"]
+    #   set_identifier = "test-primary"
+    #   weighted_routing_policy = {
+    #     weight = 90
+    #   }
+    # }
 
   ]
   depends_on = [module.zones]
