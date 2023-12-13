@@ -7,6 +7,15 @@
         "handler": "index.handler",
         "lambda_event_source_mappings": {},
         "lambda_permissions": {
+            "api_gateway_permission":{
+                "action": "lambda:InvokeFunction",
+                "api_name" : "test-product-company",
+                "path": "test/example",
+                "method"   : "GET",
+                "principal": "apigateway.amazonaws.com",
+                "statement_id": "AllowExecutionFromAPIGateway",
+                "type": "api_gateway"
+            }
         },
         "layers": [],
         "mode": "Active",
