@@ -4,7 +4,8 @@ resource "aws_api_gateway_rest_api" "api" {
   description = "Proxy to handle all the requests"
 
   body = var.open_api_json_string
-  #   put_rest_api_mode = "merge" #TODO: uncomment this l   ine when terraform 0.13 is released
+
+  # put_rest_api_mode = "merge" #TODO: uncomment this l   ine when terraform 0.13 is released
 
   endpoint_configuration {
     types = ["REGIONAL"]
@@ -15,8 +16,7 @@ resource "aws_api_gateway_rest_api" "api" {
 }
 
 resource "aws_api_gateway_domain_name" "api_gateway_domain_name" {
-  # domain_name = "${var.name}-${var.environment}-certificate"
-  domain_name               = "terraform-aws-modules-example.com"
+  domain_name              = var.domain_name
   regional_certificate_arn = var.acm_certificate_arn
 
   endpoint_configuration {
@@ -25,11 +25,6 @@ resource "aws_api_gateway_domain_name" "api_gateway_domain_name" {
   tags = tomap({ "name" = "${var.name}-domain-name" })
 }
 
-resource "aws_api_gateway_base_path_mapping" "api_gateway_base_path_mapping" {
-  domain_name = aws_api_gateway_domain_name.api_gateway_domain_name.domain_name
-  api_id      = aws_api_gateway_rest_api.api.id
-  stage_name  = var.environment
-}
 
 resource "aws_api_gateway_request_validator" "api_gateway_request_validator" {
   name                        = "${var.name}-${var.environment}-request-validator"
@@ -40,11 +35,10 @@ resource "aws_api_gateway_request_validator" "api_gateway_request_validator" {
 
 resource "aws_api_gateway_deployment" "api_gateway_deployment" {
   rest_api_id       = aws_api_gateway_rest_api.api.id
-  stage_name        = var.environment
+  # stage_name        = var.environment
+  stage_name        = ""
   stage_description = "Deployment at ${timestamp()}"
-
   depends_on = [
-    aws_api_gateway_base_path_mapping.api_gateway_base_path_mapping,
     aws_api_gateway_request_validator.api_gateway_request_validator
   ]
 
@@ -54,11 +48,12 @@ resource "aws_api_gateway_deployment" "api_gateway_deployment" {
 }
 
 resource "aws_api_gateway_stage" "api_gateway_stage" {
-  rest_api_id   = aws_api_gateway_rest_api.api.id
-  stage_name    = var.environment
-  deployment_id = aws_api_gateway_deployment.api_gateway_deployment.id
-  description   = "Deployment at ${timestamp()}"
-  tags          = merge(var.standard_tags, ({ "name" = "${var.name}-stage" }))
+  rest_api_id        = aws_api_gateway_rest_api.api.id
+  stage_name         = var.environment
+  deployment_id      = aws_api_gateway_deployment.api_gateway_deployment.id
+  description        = "Deployment at ${timestamp()}"
+  tags               = merge(var.standard_tags, ({ "name" = "${var.name}-stage" }))
+  cache_cluster_size = "0.5"
 
   access_log_settings {
     destination_arn = aws_cloudwatch_log_group.api_gateway_log_group.arn
@@ -81,6 +76,12 @@ resource "aws_api_gateway_stage" "api_gateway_stage" {
       "responseLength"    = "$context.responseLength"
     })
   }
+}
+
+resource "aws_api_gateway_base_path_mapping" "api_gateway_base_path_mapping" {
+  domain_name = aws_api_gateway_domain_name.api_gateway_domain_name.domain_name
+  api_id      = aws_api_gateway_rest_api.api.id
+  stage_name  = aws_api_gateway_stage.api_gateway_stage.stage_name
 }
 
 //api gateway key resource

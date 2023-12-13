@@ -1,5 +1,6 @@
 {
     "test-product-company": {
+        "api_name": "test-product-company",
         "company_name": "test-company",
         "logging_level": "INFO",
         "compression_size": 0,
@@ -13,6 +14,7 @@
             "product": "test-product",
             "environment": "test"
         },
-        "acm_certificate_arn": "arn:aws:acm:us-east-1:889851937279:certificate/b2adbad4-42bf-443d-b4cc-d1ecef9c11d3"
+        "domain_name": "devploutos.com",
+        "acm_certificate_arn": "arn:aws:acm:us-east-1:889851937279:certificate/d5807d1e-05a1-4a38-a313-2661b5dc6574"
     }
 }

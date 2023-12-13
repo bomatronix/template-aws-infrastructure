@@ -105,4 +105,8 @@ variable "aws_region" {
   description = "aws region"
 }
 
-
+//variable for domain_name
+variable "domain_name" {
+  type        = string
+  description = "The domain name"
+}

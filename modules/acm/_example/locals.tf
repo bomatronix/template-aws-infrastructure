@@ -3,7 +3,7 @@ locals {
   # Use existing (via data source) or create new zone (will fail validation, if zone is not reachable)
   use_existing_route53_zone = true
 
-  domain = "terraform-aws-modules-example.com"
+  domain = "devploutos.com"
 
   # Removing trailing dot from domain - just to be sure :)
   domain_name = trimsuffix(local.domain, ".")

@@ -16,5 +16,8 @@ locals {
   test_product_company_lambda_layer_config = jsondecode(templatefile("${path.module}/configurations/test_product_company/api_lambda_layer_config.json", {
     product = var.product
   }))
+
+  use_existing_route53_zone = true
+  zone_id = try(data.aws_route53_zone.this[0].zone_id, data.aws_route53_zone.this[0].zone_id)
   
 }

@@ -8,8 +8,10 @@ module "api_gateway" {
   environment         = var.environment
   logging_level       = each.value["logging_level"]
   acm_certificate_arn = each.value["acm_certificate_arn"]
+  domain_name         = "${each.value["api_name"]}-api-${var.environment}.${each.value["domain_name"]}"
+
   # base_path           = each.value["base_path"]
-  product             = var.product
+  product = var.product
   #   cognito_authorizer               = each.value["cognito_authorizer"]
   #   lambda_authorizer                = each.value["lambda_authorizer"]
   api_lambda_config            = local.test_product_company_lambda_config
@@ -26,10 +28,37 @@ module "api_gateway" {
   #   authorizer_azure_tenent_id       = each.value["authorizer_azure_tenent_id"]
   #   authorizer_cognoito_user_pool_id = each.value["authorizer_cognoito_user_pool_id"]
   open_api_json_string = local.test_product_company_open_api_json_string
-
   #   depends_on = [module.lambdas]
 }
 
+data "aws_route53_zone" "this" {
+  count = local.use_existing_route53_zone ? 1 : 0
+
+  # name         = var.domain_name
+  name         = "devploutos.com"
+  private_zone = false
+}
+
+# module "acm" {
+#   source      = "../../acm"
+#   name        = "acm"
+#   environment = "dev"
+#   domain_name = var.domain_name
+#   zone_id     = local.zone_id
+
+#   subject_alternative_names = [
+#     "*.alerts.${var.domain_name}",
+#     "new.sub.${var.domain_name}",
+#     "*.${var.domain_name}",
+#     "alerts.${var.domain_name}",
+#   ]
+
+#   validation_method = "DNS"
+
+#   tags = {
+#     Name = var.domain_name
+#   }
+# }
 # module "acm_certificate" {
 #   source              = "../../acm"
 #   for_each            = local.test_product_company_api_gateway_config
